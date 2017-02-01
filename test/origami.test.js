@@ -3,19 +3,19 @@ import proclaim from 'proclaim';
 import sinon from 'sinon/pkg/sinon';
 import * as fixtures from './helpers/fixtures';
 
-const ComponentBoilerplate = require('./../main');
+const InPageNav = require('./../main');
 
-describe("ComponentBoilerplate", () => {
+describe("InPageNav", () => {
 	it('is defined', () => {
-		proclaim.equal(typeof ComponentBoilerplate, 'function');
+		proclaim.equal(typeof InPageNav, 'function');
 	});
 
 	it('has a static init method', () => {
-		proclaim.equal(typeof ComponentBoilerplate.init, 'function');
+		proclaim.equal(typeof InPageNav.init, 'function');
 	});
 
 	it("should autoinitialize", (done) => {
-		const initSpy = sinon.spy(ComponentBoilerplate, 'init');
+		const initSpy = sinon.spy(InPageNav, 'init');
 		document.dispatchEvent(new CustomEvent('o.DOMContentLoaded'));
 		setTimeout(function(){
 			proclaim.equal(initSpy.called, true);
@@ -25,7 +25,7 @@ describe("ComponentBoilerplate", () => {
 	});
 
 	it("should not autoinitialize when the event is not dispached", () => {
-		const initSpy = sinon.spy(ComponentBoilerplate, 'init');
+		const initSpy = sinon.spy(InPageNav, 'init');
 		proclaim.equal(initSpy.called, false);
 	});
 
@@ -39,14 +39,14 @@ describe("ComponentBoilerplate", () => {
 		});
 
 		it("component array when initialized", () => {
-			const boilerplate = ComponentBoilerplate.init();
-			proclaim.equal(boilerplate instanceof Array, true);
-			proclaim.equal(boilerplate[0] instanceof ComponentBoilerplate, true);
+			const inPageNav = InPageNav.init();
+			proclaim.equal(inPageNav instanceof Array, true);
+			proclaim.equal(inPageNav[0] instanceof InPageNav, true);
 		});
 
 		it("single component when initialized with a root element", () => {
-			const boilerplate = ComponentBoilerplate.init('#element');
-			proclaim.equal(boilerplate instanceof ComponentBoilerplate, true);
+			const inPageNav = InPageNav.init('#element');
+			proclaim.equal(inPageNav instanceof InPageNav, true);
 		});
 	});
 });
