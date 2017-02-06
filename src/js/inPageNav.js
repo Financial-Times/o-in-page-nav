@@ -60,6 +60,8 @@ class InPageNav {
 		this.inPageNavEl.classList.remove('o-in-page-nav--affix');
 	}
 
+	buildMenu(){}; //TODO
+
 	// Return the vertical offset of the top of the element from the top of the document
 	static offset(el) {
 		let offset = 0;
@@ -72,8 +74,6 @@ class InPageNav {
 		}
 		return offset;
 	}
-
-	buildMenu(){}; //TODO
 
 	static init (rootEl, opts) {
 		if (!rootEl) {

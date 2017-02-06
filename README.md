@@ -1,4 +1,4 @@
-o-component-boilerplate [![Circle CI](https://circleci.com/gh/Financial-Times/o-component-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/Financial-Times/o-component-boilerplate/tree/master)
+o-in-page-nav [![Circle CI](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master.svg?style=svg)](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master)
 =================
 
 _A short description of what this component does._
@@ -26,22 +26,22 @@ _Common templating can go here, especially if there is only one template, but pe
 _Remember to start your codeblocks with three backticks and "html" so your markup is syntax highlighted correctly._
 
 ```html
-<div data-o-component="o-component-boilerplate" class='o-component-boilerplate'>
+<div data-o-component="o-in-page-nav" class='o-in-page-nav'>
 </div>
 ```
 
 ### JavaScript
 _Remember to start your codeblocks with three backticks and "js" so your js is syntax highlighted correctly._
 
-_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by modules not auto initialising, so this line (remember to change the `o-component-boilerplate` to your component name) is useful if you have JavaScript:_
+_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by modules not auto initialising, so this line (remember to change the `o-in-page-nav` to your component name) is useful if you have JavaScript:_
 
 No code will run automatically unless you are using the Build Service.
-You must either construct an `o-component-boilerplate` object or fire the `o.DOMContentLoaded` event, which oComponent listens for.
+You must either construct an `o-in-page-nav` object or fire the `o.DOMContentLoaded` event, which oComponent listens for.
 
-#### Constructing an o-component-boilerplate
+#### Constructing an o-in-page-nav
 
 ```js
-const oComponentBoilerplate = require('o-component-boilerplate');
+const oComponentBoilerplate = require('o-in-page-nav');
 
 const oComponentBoilerplate = new oComponentBoilerplate();
 ```
@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
 ### Sass
 _Remember to start your codeblocks with three backticks and "sass" so your markup is syntax highlighted correctly._
 
-_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by silent mode, so this line (remember to change the o-component-boilerplate to your component name) is useful if you have Sass:_
+_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by silent mode, so this line (remember to change the o-in-page-nav to your component name) is useful if you have Sass:_
 
-As with all Origami components, o-component-boilerplate has a [silent mode](http://origami.ft.com/docs/syntax/scss/#silent-styles). To use its compiled CSS (rather than using its mixins with your own Sass) set `$o-component-boilerplate-is-silent : false;` in your Sass after you've imported the o-component-boilerplate Sass.
+As with all Origami components, o-in-page-nav has a [silent mode](http://origami.ft.com/docs/syntax/scss/#silent-styles). To use its compiled CSS (rather than using its mixins with your own Sass) set `$o-in-page-nav-is-silent : false;` in your Sass after you've imported the o-in-page-nav Sass.
 
 ## Troubleshooting
 _This is a good place to put problems that come up repeatedly_
@@ -76,10 +76,10 @@ _Migration guides are very important! Always include one for major releases. To 
 
 ### Migrating from 1.X.X to 2.X.X
 
-The 2.0.0 release changes the default behaviour of o-component-boilerplate.
+The 2.0.0 release changes the default behaviour of o-in-page-nav.
 
 ```diff
-<div class="o-component-boilerplate__container">
+<div class="o-in-page-nav__container">
 - remove this line
 + add this line
 </div>
@@ -89,7 +89,7 @@ The 2.0.0 release changes the default behaviour of o-component-boilerplate.
 
 ## Contact
 
-If you have any questions or comments about this component, or need help using it, please either [raise an issue](https://github.com/Financial-Times/o-component-boilerplate/issues), visit [#ft-origami](https://financialtimes.slack.com/messages/ft-origami/) or email [Origami Support](mailto:origami-support@ft.com).
+If you have any questions or comments about this component, or need help using it, please either [raise an issue](https://github.com/Financial-Times/o-in-page-nav/issues), visit [#ft-origami](https://financialtimes.slack.com/messages/ft-origami/) or email [Origami Support](mailto:origami-support@ft.com).
 
 ----
 
