@@ -8,4 +8,8 @@
 
 	// Set to silent again to avoid being output twice
 	$o-component-boilerplate-is-silent: true !global;
+	.o-in-page-nav--affix {
+		position: fixed;
+		top: 0;
+	}
 }

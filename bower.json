@@ -13,6 +13,6 @@
 		"main.js"
   ],
   "dependencies": {
-    "o-colors": "^3.3.0"
+    "o-viewport": "^v3.1.0"
   }
 }

@@ -1,2 +1,19 @@
 $o-component-boilerplate-is-silent: false;
 @import '../../main';
+
+
+body {
+	padding: 20px;
+}
+.demo-section {
+	height: 300px;
+	border-bottom: 5px solid #ccc;
+	margin: 20px 0;
+}
+
+.demo-menu li {
+	list-style: none;
+	&.active:before {
+		content: ">";
+	}
+}
