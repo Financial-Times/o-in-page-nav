@@ -13,8 +13,4 @@ body {
 
 .demo-menu li {
 	list-style: none;
-	&.active:before,
-	&[aria-selected='true']:before {
-		content: ">";
-	}
 }

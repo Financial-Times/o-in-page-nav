@@ -87,14 +87,14 @@ class InPageNav {
 
 		if (candidate && candidate.id !== this.activeMenuItem) {
 			this.headings.forEach((heading) => {
-				document.querySelector('.sticky-nav-'+heading.id).setAttribute('aria-selected', 'false');
+				document.querySelector('.sticky-nav-'+heading.id).classList.remove('o-in-page-nav-item--active');
 			});
-			document.querySelector('.sticky-nav-'+candidate.id).setAttribute('aria-selected', 'true');
+			document.querySelector('.sticky-nav-'+candidate.id).classList.add('o-in-page-nav-item--active');
 			this.activeMenuItem = candidate.id;
 
 		} else if (!candidate) {
 			this.headings.forEach((heading) => {
-				document.querySelector('.sticky-nav-'+heading.id).setAttribute('aria-selected', 'false'); // TODO: is aria-selected the correct property? read spec.
+				document.querySelector('.sticky-nav-'+heading.id).classList.remove('o-in-page-nav-item--active');
 			});
 		}
 	}
