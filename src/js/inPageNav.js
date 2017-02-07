@@ -6,7 +6,17 @@ class InPageNav {
 		this.inPageNavEl = InPageNavEl;
 		this.opts = opts || {}; // no opts right now
 
+		/* prevent the margins collapsing */
+		let inner = document.createElement('div');
+		inner.style.marginTop = '-1px';
+		inner.style.paddingTop = '1px';
+		inner.innerHTML = this.inPageNavEl.innerHTML;
+		this.inPageNavEl.innerHTML = '';
+		this.inPageNavEl.appendChild(inner);
+
 		this.activeMenuItem;
+
+		this.dockPoint = InPageNav.offset(this.inPageNavEl); // don't recalc this unless the viewport changes.
 
 		// Add viewport listeners
 		Viewport.listenTo('scroll');
