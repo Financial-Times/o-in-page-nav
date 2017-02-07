@@ -6,6 +6,13 @@ class InPageNav {
 		this.inPageNavEl = InPageNavEl;
 		this.opts = opts || {}; // no opts right now
 
+		// replace this with a function that determines what the headings should be
+		this.headingIDs = ['section-1', 'section-2', 'section-3', 'section-4'];
+		this.headings = this.headingIDs.map((headingID) => {
+			let el = document.getElementById(headingID);
+			return { id: el.id, position: InPageNav.offset(el) };
+		});
+
 		/* prevent the margins collapsing */
 		let inner = document.createElement('div');
 		inner.style.marginTop = '-1px';
@@ -39,6 +46,16 @@ class InPageNav {
 	}
 */
 
+
+
+	get scrollMargin() {
+		return Viewport.getSize().height / 8;
+	}
+
+	get scrollTop() {
+		return window.pageYOffset || document.body.scrollTop;
+	}
+
 	scrollWindowHandler(event){
 
 		if(this.shouldDock()) {
@@ -47,21 +64,50 @@ class InPageNav {
 			this.undock();
 		}
 
-		/* which menu item should be highlighted */
+		this.getCurrentHeading();
+
 		return false;
 	}
 
-	shouldDock(){
-		const scrolltop = window.pageYOffset || document.body.scrollTop;
-		const dockpoint = InPageNav.offset(this.inPageNavEl) + this.inPageNavEl.scrollHeight;
+	getCurrentHeading(){
+		const scrollOffset = this.scrollTop + this.scrollMargin;
+		let candidate;
 
-		return scrolltop > dockpoint
+		this.headings.forEach(function(heading) {
+
+			// Heading is before current scroll position, so might be the current heading
+			if (heading.position <= scrollOffset) {
+				candidate = heading;
+
+			// Heading is after current scroll position, can't be the current or any future one
+		} else if (heading.position > scrollOffset) {
+				return false;
+			}
+		});
+
+		if (candidate && candidate.id !== this.activeMenuItem) {
+			this.headings.forEach((heading) => {
+				document.querySelector('.sticky-nav-'+heading.id).setAttribute('aria-selected', 'false');
+			});
+			document.querySelector('.sticky-nav-'+candidate.id).setAttribute('aria-selected', 'true');
+			this.activeMenuItem = candidate.id;
+
+		} else if (!candidate) {
+			this.headings.forEach((heading) => {
+				document.querySelector('.sticky-nav-'+heading.id).setAttribute('aria-selected', 'false'); // TODO: is aria-selected the correct property? read spec.
+			});
+		}
+	}
+
+	shouldDock(){
+		return (this.scrollTop > this.dockPoint);
 	}
 /*
 	isDocked(){
 		return this.inPageNavEl.classList.contains('o-in-page-nav--affix');
 	}
 */
+
 	dock(){
 		this.inPageNavEl.classList.add('o-in-page-nav--affix');
 	}
