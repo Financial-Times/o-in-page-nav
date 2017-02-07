@@ -6,12 +6,7 @@ class InPageNav {
 		this.inPageNavEl = InPageNavEl;
 		this.opts = opts || {}; // no opts right now
 
-		// replace this with a function that determines what the headings should be
-		this.headingIDs = ['section-1', 'section-2', 'section-3', 'section-4'];
-		this.headings = this.headingIDs.map((headingID) => {
-			let el = document.getElementById(headingID);
-			return { id: el.id, position: InPageNav.offset(el) };
-		});
+		this.headings = InPageNav.calculateHeadings();
 
 		/* prevent the margins collapsing */
 		let inner = document.createElement('div');
@@ -30,10 +25,10 @@ class InPageNav {
 		Viewport.listenTo('resize');
 
 		this.scrollWindowHandler = this.scrollWindowHandler.bind(this);
-		//this.showHideMenu = this.showHideMenu.bind(this);
+		this.showHideMenu = this.resizeWindowHandler.bind(this);
 
 		document.addEventListener('oViewport.scroll', this.scrollWindowHandler);
-		//document.addEventListener('oViewport.resize', this.showHideMenu);
+		document.addEventListener('oViewport.resize', this.resizeWindowHandler);
 	}
 /*
 	showHideMenu(){}
@@ -46,7 +41,30 @@ class InPageNav {
 	}
 */
 
+	resizeWindowHandler(){
+		/* TODO: show hide the menu according to the window width */
 
+		/* the dock point may have changed if the page has reflowed, so recalc that */
+		this.dockPoint = InPageNav.offset(this.inPageNavEl);
+
+		/* the headings may have changed position so recalc those */
+		this.headings = InPageNav.calculateHeadings();
+
+	}
+
+
+	// If the viewport resizes vertically, (say, because a section is open/closed) these need to be recaculated
+	static calculateHeadings(selector, rootEl) {
+		const elSelector = selector || 'h2'
+		const containerEl = rootEl || document.body;
+		const els = containerEl.querySelectorAll(elSelector);
+		let headings = [];
+		els.forEach((el) => {
+			headings.push( { id: el.id, position: InPageNav.offset(el) } );
+		});
+
+		return headings;
+	}
 
 	get scrollMargin() {
 		return Viewport.getSize().height / 8;
