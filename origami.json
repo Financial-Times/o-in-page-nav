@@ -1,8 +1,8 @@
 {
 		"description": "Component description",
-		"keywords": "component, keywords, for, the, registry, search",
+		"keywords": "sticky, navigation",
 		"origamiType": "module",
-		"origamiCategory": "components",
+		"origamiCategory": "utilities",
 		"origamiVersion": 1,
 		"support": "https://github.com/Financial-Times/o-component-boilerplate/issues",
 		"supportStatus": "active",
@@ -13,7 +13,7 @@
 		"demosDefaults": {
 			"sass": "demos/src/demo.scss",
 			"documentClasses": "",
-			"dependencies": ""
+			"dependencies": "o-grid"
 		},
 		"demos": [
 			{
