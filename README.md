@@ -1,49 +1,68 @@
 o-in-page-nav [![Circle CI](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master.svg?style=svg)](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master)
 =================
 
-_A short description of what this component does._
+This component does two things:
 
+* Make a navigation element 'stick' to the screen when the window scroll position reaches the top of the 'sticky' nav
+* As the scrolling continues, adds an active class to the nav item that is on the screen
 
-_A table of contents to help people find things_
+This component has no styling. You should style it in keeping with your product.
 
 - [Usage](#usage)
 	- [Markup](#markup)
 	- [JavaScript](#javascript)
 	- [Sass](#sass)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [Migration guide](#migration-guide)
 - [Contact](#contact)
 - [Licence](#licence)
 
 ## Usage
-_Whatever usage instructions your component has. We've broken this down by Markup, JavaScript and Sass, but it depends how complex your component is._
+
+This component can be used imperatively with {opts}, or declaratively by putting in all of the set-up using data attributes in the markup eg `data-o-in-page-nav-headings-selector="h3"`.
+
+The configuration options are:
+
+* **headings-container-el**: The container of the content for the nav. This defaults to the document body.
+* **headings-selector**: The selector to be applied to the headings-container-el. This defaults to `h2`.
+* **active-nav-item-class**: The class to be added to the 'active' item in the navigation. Defaults to `o-in-page-nav-item--active`
+
 
 ### Markup
 
-_Common templating can go here, especially if there is only one template, but people can always check the demos for more._
+We advise your navigation markup is a `<nav>` with some links in, rather than using an ordered list. The reasons for this are discussed at length [in this CSS tricks article](https://css-tricks.com/navigation-in-lists-to-be-or-not-to-be/), tl;dr Screen readers.
 
-_Remember to start your codeblocks with three backticks and "html" so your markup is syntax highlighted correctly._
+The `h2`s, or whatever you've chosen as your heading elements, should have a name or id so they can be jump linked to.
 
 ```html
-<div data-o-component="o-in-page-nav" class='o-in-page-nav'>
+<nav role="navigation" data-o-component='o-in-page-nav'>
+	<a href="#section-1">Section 1</a>
+	<a href="#section-2">Section 2</a>
+	<a href="#section-3">Section 3</a>
+	<a href="#section-4">Section 4</a>
+</nav>
+<!-- whatever your body markup is -->
+<div class='content'>
+	<h2 name='section-1'>Section 1</h2>
+	<p> ... </p>
+	<h2 name='section-2'>Section 2</h2>
+	<p> ... </p>
+	<h2 name='section-3'>Section 3</h2>
+	<p> ... </p>
+	<h2 name='section-4'>Section 4</h2>
+	<p> ... </p>
 </div>
 ```
 
 ### JavaScript
-_Remember to start your codeblocks with three backticks and "js" so your js is syntax highlighted correctly._
-
-_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by modules not auto initialising, so this line (remember to change the `o-in-page-nav` to your component name) is useful if you have JavaScript:_
 
 No code will run automatically unless you are using the Build Service.
-You must either construct an `o-in-page-nav` object or fire the `o.DOMContentLoaded` event, which oComponent listens for.
+You must either construct an `o-in-page-nav` object or fire the `o.DOMContentLoaded` event, which all Origami components listen for.
 
 #### Constructing an o-in-page-nav
 
 ```js
-const oComponentBoilerplate = require('o-in-page-nav');
+const OInPageNav = require('o-in-page-nav');
 
-const oComponentBoilerplate = new oComponentBoilerplate();
+const nav = new OInPageNav();
 ```
 
 #### Firing an oDomContentLoaded event
@@ -55,36 +74,11 @@ document.addEventListener('DOMContentLoaded', function() {
 ```
 
 ### Sass
-_Remember to start your codeblocks with three backticks and "sass" so your markup is syntax highlighted correctly._
 
-_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by silent mode, so this line (remember to change the o-in-page-nav to your component name) is useful if you have Sass:_
+This component does not provide any styles.
+The JavaScript used to highlight the 'current' item in the nav will apply and remove an active class. This can be set in the component options, so if you wish to use your own class name convention, that will work. It defaults to `.o-in-page-nav-item--active`. If you want to style on that, that is fine too.
 
-As with all Origami components, o-in-page-nav has a [silent mode](http://origami.ft.com/docs/syntax/scss/#silent-styles). To use its compiled CSS (rather than using its mixins with your own Sass) set `$o-in-page-nav-is-silent : false;` in your Sass after you've imported the o-in-page-nav Sass.
-
-## Troubleshooting
-_This is a good place to put problems that come up repeatedly_
-
-### The thing with the thing isn't working
-Fix it by turning it off and on again
-
-## Contributing
-If your component is particularly complicated (image sets fall into this category) then a contributing section or even a contributing.md might be useful.
-
-
-## Migration guide
-_Migration guides are very important! Always include one for major releases. To create a codeblock that has diff highligting, use three backticks followed by the word diff_
-
-### Migrating from 1.X.X to 2.X.X
-
-The 2.0.0 release changes the default behaviour of o-in-page-nav.
-
-```diff
-<div class="o-in-page-nav__container">
-- remove this line
-+ add this line
-</div>
-```
-
+This component makes no guesses about what screen sizes it should be shown / hidden. At narrow screen widths you should hide this menu.
 ---
 
 ## Contact
