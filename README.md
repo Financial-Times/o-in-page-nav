@@ -24,30 +24,33 @@ The configuration options are:
 * **headings-container-el**: The container of the content for the nav. This defaults to the document body.
 * **headings-selector**: The selector to be applied to the headings-container-el. This defaults to `h2`.
 * **active-nav-item-class**: The class to be added to the 'active' item in the navigation. Defaults to `o-in-page-nav-item--active`
+* **nav-item-selector-root**: The root of the class used to select the active item. Defaults to `o-in-page-nav__item--`.
 
 
 ### Markup
 
 We advise your navigation markup is a `<nav>` with some links in, rather than using an ordered list. The reasons for this are discussed at length [in this CSS tricks article](https://css-tricks.com/navigation-in-lists-to-be-or-not-to-be/), tl;dr Screen readers.
 
-The `h2`s, or whatever you've chosen as your heading elements, should have a name or id so they can be jump linked to.
+Your nav links should have a class of `o-in-page-nav__item--{section id}`. This is used to highlight the active element as the page scrolls. If you want to define your own selector (not use `o-in-page-nav*`), you can set a custom selector root in the options on the data-o-component.
+
+The `h2`s, or whatever you've chosen as your heading elements, should have an id so they can be jump linked to.
 
 ```html
 <nav role="navigation" data-o-component='o-in-page-nav'>
-	<a href="#section-1">Section 1</a>
-	<a href="#section-2">Section 2</a>
-	<a href="#section-3">Section 3</a>
-	<a href="#section-4">Section 4</a>
+	<a class="o-in-page-nav__item--section-1" href="#section-1">Section 1</a>
+	<a class="o-in-page-nav__item--section-2" href="#section-2">Section 2</a>
+	<a class="o-in-page-nav__item--section-3" href="#section-3">Section 3</a>
+	<a class="o-in-page-nav__item--section-4" href="#section-4">Section 4</a>
 </nav>
 <!-- whatever your body markup is -->
 <div class='content'>
-	<h2 name='section-1'>Section 1</h2>
+	<h2 id='section-1'>Section 1</h2>
 	<p> ... </p>
-	<h2 name='section-2'>Section 2</h2>
+	<h2 id='section-2'>Section 2</h2>
 	<p> ... </p>
-	<h2 name='section-3'>Section 3</h2>
+	<h2 id='section-3'>Section 3</h2>
 	<p> ... </p>
-	<h2 name='section-4'>Section 4</h2>
+	<h2 id='section-4'>Section 4</h2>
 	<p> ... </p>
 </div>
 ```
