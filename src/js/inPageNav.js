@@ -6,9 +6,36 @@ class InPageNav {
 		this.inPageNavEl = InPageNavEl;
 		this.opts = opts || {}; // no opts right now
 
-		this.headings = InPageNav.calculateHeadings();
+		// the thing to look for within the container. Defaults to h2
+		if (this.opts.headingsSelector) {
+			this.headingsSelector = this.opts.headingsSelector;
+		} else {
+			 this.headingsSelector = 'h2';
+		}
 
-		/* prevent the margins collapsing */
+		// the container of the menu content. Defaults to body.
+		if (this.opts.containerEl) {
+			this.containerEl = document.body;
+		} else {
+			this.containerEl = document.querySelector(this.opts.containerEl);
+		}
+
+		// the container of the menu content. Defaults to body.
+		if (this.opts.activeNavItemClass) {
+			this.activeClass = this.opts.activeNavItemClass;
+		} else {
+			this.activeClass = 'o-in-page-nav-item--active';
+		}
+
+		if (this.opts.navItemClassRoot) {
+			this.navItemSelectorRoot = this.opts.navItemClassRoot;
+		} else {
+			this.navItemSelectorRoot = '.o-in-page-nav__item--';
+		}
+
+		this.headings = InPageNav.calculateHeadings(this.headingsSelector, this.containerEl);
+
+		/* add inner wrapper div to prevent the margins collapsing */
 		let inner = document.createElement('div');
 		inner.style.marginTop = '-1px';
 		inner.style.paddingTop = '1px';
@@ -87,21 +114,21 @@ class InPageNav {
 				candidate = heading;
 
 			// Heading is after current scroll position, can't be the current or any future one
-		} else if (heading.position > scrollOffset) {
+			} else if (heading.position > scrollOffset) {
 				return false;
 			}
 		});
 
 		if (candidate && candidate.id !== this.activeMenuItem) {
 			this.headings.forEach((heading) => {
-				document.querySelector('.sticky-nav-'+heading.id).classList.remove('o-in-page-nav-item--active');
+				document.querySelector(this.navItemSelectorRoot + heading.id).classList.remove(this.activeClass);
 			});
-			document.querySelector('.sticky-nav-'+candidate.id).classList.add('o-in-page-nav-item--active');
+			document.querySelector(this.navItemSelectorRoot + candidate.id).classList.add(this.activeClass);
 			this.activeMenuItem = candidate.id;
 
 		} else if (!candidate) {
 			this.headings.forEach((heading) => {
-				document.querySelector('.sticky-nav-'+heading.id).classList.remove('o-in-page-nav-item--active');
+				document.querySelector(this.navItemSelectorRoot + heading.id).classList.remove(this.activeClass);
 			});
 		}
 	}
