@@ -4,7 +4,7 @@ class InPageNav {
 
 	constructor (InPageNavEl, opts) {
 		this.inPageNavEl = InPageNavEl;
-		this.opts = opts || {}; // no opts right now
+		this.opts = opts || InPageNav.getOptions(InPageNavEl);
 
 		// the thing to look for within the container. Defaults to h2
 		if (this.opts.headingsSelector) {
@@ -56,6 +56,24 @@ class InPageNav {
 
 		document.addEventListener('oViewport.scroll', this.scrollWindowHandler);
 		document.addEventListener('oViewport.resize', this.resizeWindowHandler);
+	}
+
+	static getOptions(inPageNavEl){
+		let opts = {};
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-selector')) {
+			opts.headingsSelector = inPageNavEl.getAttribute('data-o-in-page-nav-headings-selector');
+		}
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-container-el')) {
+			opts.containerEl = inPageNavEl.getAttribute('data-o-in-page-nav-headings-container-el');
+		}
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-active-nav-item-class')) {
+			opts.activeNavItemClass = inPageNavEl.getAttribute('data-o-in-page-nav-active-nav-item-class');
+		}
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-nav-item-class-root')) {
+			opts.navItemClassRoot = inPageNavEl.getAttribute('data-o-in-page-nav-nav-item-class-root');
+		}
+
+		return opts;
 	}
 
 	resizeWindowHandler(){
