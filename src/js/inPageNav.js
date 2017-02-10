@@ -98,6 +98,11 @@ class InPageNav {
 		els.forEach((el) => {
 			headings.push( { id: el.id, position: InPageNav.offset(el) } );
 		});
+
+		if (headings.length === 0){
+			throw new Error('"o-in-page-nav error": No headings were found in the main document to link to.');
+		}
+
 		return headings;
 	}
 

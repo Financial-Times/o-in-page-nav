@@ -30,11 +30,18 @@ describe("InPageNav", () => {
 	});
 
 	describe("should create a new", () => {
+		let getOptionsStub;
+		let calculateHeadings;
+
 		beforeEach(() => {
+			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
+			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns({});
 			fixtures.htmlCode();
 		});
 
 		afterEach(() => {
+			getOptionsStub.restore();
+			calculateHeadings.restore();
 			fixtures.reset();
 		});
 
