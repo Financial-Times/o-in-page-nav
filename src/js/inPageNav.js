@@ -30,16 +30,6 @@ class InPageNav {
 		document.addEventListener('oViewport.scroll', this.scrollWindowHandler);
 		document.addEventListener('oViewport.resize', this.resizeWindowHandler);
 	}
-/*
-	showHideMenu(){}
-
-	showMenu(){
-		this.inPageNavEl.setAttribute('aria-hidden', false);
-	}
-	hideMenu(){
-		this.inPageNavEl.setAttribute('aria-hidden', true);
-	}
-*/
 
 	resizeWindowHandler(){
 		/* TODO: show hide the menu according to the window width */
@@ -62,7 +52,6 @@ class InPageNav {
 		els.forEach((el) => {
 			headings.push( { id: el.id, position: InPageNav.offset(el) } );
 		});
-
 		return headings;
 	}
 
@@ -120,11 +109,6 @@ class InPageNav {
 	shouldDock(){
 		return (this.scrollTop > this.dockPoint);
 	}
-/*
-	isDocked(){
-		return this.inPageNavEl.classList.contains('o-in-page-nav--affix');
-	}
-*/
 
 	dock(){
 		this.inPageNavEl.classList.add('o-in-page-nav--affix');
