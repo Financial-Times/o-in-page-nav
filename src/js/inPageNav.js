@@ -27,6 +27,7 @@ class InPageNav {
 			this.activeClass = 'o-in-page-nav-item--active';
 		}
 
+		// The root of the selector for matching a page section to a menu nav item
 		if (this.opts.navItemClassRoot) {
 			this.navItemSelectorRoot = this.opts.navItemClassRoot;
 		} else {
@@ -90,7 +91,7 @@ class InPageNav {
 
 	// If the viewport resizes vertically, (say, because a section is open/closed) these need to be recaculated
 	static calculateHeadings(selector, rootEl) {
-		const elSelector = selector || 'h2'
+		const elSelector = selector || 'h2';
 		const containerEl = rootEl || document.body;
 		const els = containerEl.querySelectorAll(elSelector);
 		let headings = [];
@@ -108,16 +109,13 @@ class InPageNav {
 		return window.pageYOffset || document.body.scrollTop;
 	}
 
-	scrollWindowHandler(event){
-
+	scrollWindowHandler(){
 		if(this.shouldDock()) {
 			this.dock();
 		} else {
 			this.undock();
 		}
-
 		this.getCurrentHeading();
-
 		return false;
 	}
 

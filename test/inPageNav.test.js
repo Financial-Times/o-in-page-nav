@@ -19,16 +19,17 @@ describe("InPageNav", () => {
 	describe("constructor", () => {
 		it("adds viewport listeners", () => {
 			const viewportSpy = sinon.spy(Viewport, 'listenTo');
-			const inPageNav = InPageNav.init();
+			InPageNav.init();
 			proclaim.isTrue(viewportSpy.calledTwice);
 			viewportSpy.restore();
 		});
 		it("adds document listener for viewport scroll events", () => {
 			const documentSpy = sinon.spy(document, 'addEventListener');
-			const inPageNav = InPageNav.init();
+			InPageNav.init();
 			proclaim.isTrue(documentSpy.called);
 			documentSpy.restore();
 		});
+
 	});
 
 	describe("#offset", () => {
@@ -43,7 +44,7 @@ describe("InPageNav", () => {
 			el.style.position = 'absolute';
 
 			proclaim.strictEqual(InPageNav.offset(el), 50);
-		})
+		});
 	});
 
 	describe("#dock", () => {
@@ -95,12 +96,12 @@ describe("InPageNav", () => {
 		});
 		it('calls undock if the result of shouldDock is false', () => {
 			shouldDockStub.returns(false);
-			
+
 			inPageNav.scrollWindowHandler(sinon.stub());
 			proclaim.isTrue(shouldDockStub.called);
 			proclaim.isFalse(dockSpy.called);
 			proclaim.isTrue(undockSpy.called);
-		})
+		});
 
 	});
 
