@@ -1,52 +1,76 @@
-o-component-boilerplate [![Circle CI](https://circleci.com/gh/Financial-Times/o-component-boilerplate/tree/master.svg?style=svg)](https://circleci.com/gh/Financial-Times/o-component-boilerplate/tree/master)
+o-in-page-nav [![Circle CI](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master.svg?style=svg)](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master)
 =================
 
-_A short description of what this component does._
+This component does two things:
 
+* Make a navigation element 'stick' to the screen when the window scroll position reaches the top of the 'sticky' nav
+* As the scrolling continues, adds an active class to the nav item that is on the screen
 
-_A table of contents to help people find things_
+This component has no styling. You should style it in keeping with your product.
 
 - [Usage](#usage)
 	- [Markup](#markup)
 	- [JavaScript](#javascript)
 	- [Sass](#sass)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
-- [Migration guide](#migration-guide)
 - [Contact](#contact)
 - [Licence](#licence)
 
 ## Usage
-_Whatever usage instructions your component has. We've broken this down by Markup, JavaScript and Sass, but it depends how complex your component is._
+
+This component can be used imperatively, passed in as options to the constructor, or declaratively using data attributes on the `o-in-page-nav` node eg `data-o-in-page-nav-headings-selector="h3"`.
+
+The available configuration options are:
+
+* **headings-container-el**: The container of the content for the nav. This defaults to the document body.
+* **headings-selector**: The selector to be applied to the headings-container-el. This defaults to `h2`.
+* **active-nav-item-class**: The class to be added to the 'active' item in the navigation. Defaults to `o-in-page-nav-item--active`
+* **nav-item-selector-root**: The root of the selector used to highlight the active item. Defaults to `.o-in-page-nav__item--`.
+
 
 ### Markup
 
-_Common templating can go here, especially if there is only one template, but people can always check the demos for more._
+We advise your navigation markup uses a `<nav>` with some links in, rather than using an ordered list. The reasons for this are discussed at length [in this CSS tricks article](https://css-tricks.com/navigation-in-lists-to-be-or-not-to-be/), tl;dr Screen readers.
 
-_Remember to start your codeblocks with three backticks and "html" so your markup is syntax highlighted correctly._
+Your nav links should have a class of `o-in-page-nav__item--{section id}`. This is used to highlight the active element as the page scrolls. If you want to define your own selector (not use `o-in-page-nav*`), you can set a custom selector root in the options on the `o-in-page-nav` element.
+
+The `h2`s, or whatever you've chosen as your heading elements, should have an id so they can be jump linked to.
 
 ```html
-<div data-o-component="o-component-boilerplate" class='o-component-boilerplate'>
+<nav role="navigation" data-o-component='o-in-page-nav'>
+	<a class="o-in-page-nav__item--section-1" href="#section-1">Section 1</a>
+	<a class="o-in-page-nav__item--section-2" href="#section-2">Section 2</a>
+	<a class="o-in-page-nav__item--section-3" href="#section-3">Section 3</a>
+	<a class="o-in-page-nav__item--section-4" href="#section-4">Section 4</a>
+</nav>
+<!-- whatever your body markup is -->
+<div class='content'>
+	<h2 id='section-1'>Section 1</h2>
+	<p> ... </p>
+	<h2 id='section-2'>Section 2</h2>
+	<p> ... </p>
+	<h2 id='section-3'>Section 3</h2>
+	<p> ... </p>
+	<h2 id='section-4'>Section 4</h2>
+	<p> ... </p>
 </div>
 ```
 
 ### JavaScript
-_Remember to start your codeblocks with three backticks and "js" so your js is syntax highlighted correctly._
-
-_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by modules not auto initialising, so this line (remember to change the `o-component-boilerplate` to your component name) is useful if you have JavaScript:_
 
 No code will run automatically unless you are using the Build Service.
-You must either construct an `o-component-boilerplate` object or fire the `o.DOMContentLoaded` event, which oComponent listens for.
+You must either construct an `OInPageNav` instance or fire the `o.DOMContentLoaded` event, which all Origami components listen for.
 
-#### Constructing an o-component-boilerplate
+#### Constructing an o-in-page-nav
 
 ```js
-const oComponentBoilerplate = require('o-component-boilerplate');
+const OInPageNav = require('o-in-page-nav');
 
-const oComponentBoilerplate = new oComponentBoilerplate();
+const nav = new OInPageNav();
 ```
 
 #### Firing an oDomContentLoaded event
+
+You only need to do this once, as all Origami components listen for this event.
 
 ```js
 document.addEventListener('DOMContentLoaded', function() {
@@ -55,41 +79,18 @@ document.addEventListener('DOMContentLoaded', function() {
 ```
 
 ### Sass
-_Remember to start your codeblocks with three backticks and "sass" so your markup is syntax highlighted correctly._
 
-_Though it's not practical to repeat every aspect of Origami modules convention for every component, **A LOT** of people get tripped up by silent mode, so this line (remember to change the o-component-boilerplate to your component name) is useful if you have Sass:_
+This component does not provide any styles except those needed to 'stick' the menu to the screen at the right scroll point.
 
-As with all Origami components, o-component-boilerplate has a [silent mode](http://origami.ft.com/docs/syntax/scss/#silent-styles). To use its compiled CSS (rather than using its mixins with your own Sass) set `$o-component-boilerplate-is-silent : false;` in your Sass after you've imported the o-component-boilerplate Sass.
+The JavaScript used to highlight the 'current' item in the nav will apply and remove an active class. This can be set in the component options, so if you want to use your own class name convention, that will work. It defaults to `.o-in-page-nav-item--active`. If you want to style on that, that's fine too.
 
-## Troubleshooting
-_This is a good place to put problems that come up repeatedly_
-
-### The thing with the thing isn't working
-Fix it by turning it off and on again
-
-## Contributing
-If your component is particularly complicated (image sets fall into this category) then a contributing section or even a contributing.md might be useful.
-
-
-## Migration guide
-_Migration guides are very important! Always include one for major releases. To create a codeblock that has diff highligting, use three backticks followed by the word diff_
-
-### Migrating from 1.X.X to 2.X.X
-
-The 2.0.0 release changes the default behaviour of o-component-boilerplate.
-
-```diff
-<div class="o-component-boilerplate__container">
-- remove this line
-+ add this line
-</div>
-```
+This component makes no guesses about what screen sizes it should be shown / hidden. For single column widths, this component should probably be hidden but that is up to your application to handle.
 
 ---
 
 ## Contact
 
-If you have any questions or comments about this component, or need help using it, please either [raise an issue](https://github.com/Financial-Times/o-component-boilerplate/issues), visit [#ft-origami](https://financialtimes.slack.com/messages/ft-origami/) or email [Origami Support](mailto:origami-support@ft.com).
+If you have any questions or comments about this component, or need help using it, please either [raise an issue](https://github.com/Financial-Times/o-in-page-nav/issues), visit [#ft-origami](https://financialtimes.slack.com/messages/ft-origami/) or email [Origami Support](mailto:origami-support@ft.com).
 
 ----
 

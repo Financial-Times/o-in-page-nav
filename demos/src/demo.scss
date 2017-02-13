@@ -1,4 +1,4 @@
-$o-component-boilerplate-is-silent: false;
+$o-in-page-nav-is-silent: false;
 @import '../../main';
 
 
@@ -7,13 +7,14 @@ body {
 }
 .demo-section {
 	height: 300px;
-	border-bottom: 5px solid #ccc;
+	border-bottom: 5px solid #cccccc;
 	margin: 20px 0;
 }
 
-.demo-menu li {
-	list-style: none;
-	&.active:before {
-		content: ">";
-	}
+nav a {
+	display: block;
+}
+
+.o-in-page-nav-item--active {
+	font-weight: bold;
 }

@@ -15,17 +15,29 @@ describe("InPageNav", () => {
 		fixtures.reset();
 	});
 
-
 	describe("constructor", () => {
+		let getOptionsStub;
+		let calculateHeadings;
+
+		beforeEach(() => {
+			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
+			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns({});
+		});
+
+		afterEach(() => {
+			getOptionsStub.restore();
+			calculateHeadings.restore();
+		});
+
 		it("adds viewport listeners", () => {
 			const viewportSpy = sinon.spy(Viewport, 'listenTo');
-			const inPageNav = InPageNav.init();
+			InPageNav.init();
 			proclaim.isTrue(viewportSpy.calledTwice);
 			viewportSpy.restore();
 		});
 		it("adds document listener for viewport scroll events", () => {
 			const documentSpy = sinon.spy(document, 'addEventListener');
-			const inPageNav = InPageNav.init();
+			InPageNav.init();
 			proclaim.isTrue(documentSpy.called);
 			documentSpy.restore();
 		});
@@ -43,10 +55,24 @@ describe("InPageNav", () => {
 			el.style.position = 'absolute';
 
 			proclaim.strictEqual(InPageNav.offset(el), 50);
-		})
+		});
 	});
 
 	describe("#dock", () => {
+
+		let getOptionsStub;
+		let calculateHeadings;
+
+		beforeEach(() => {
+			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
+			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns({});
+		});
+
+		afterEach(() => {
+			getOptionsStub.restore();
+			calculateHeadings.restore();
+		});
+
 		it("adds the fixed class to the navigation container", () => {
 			const el = document.getElementById('element');
 			const inPageNav = new InPageNav(el);
@@ -56,6 +82,20 @@ describe("InPageNav", () => {
 	});
 
 	describe("#undock", () => {
+
+		let getOptionsStub;
+		let calculateHeadings;
+
+		beforeEach(() => {
+			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
+			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns({});
+		});
+
+		afterEach(() => {
+			getOptionsStub.restore();
+			calculateHeadings.restore();
+		});
+
 		it("removes the fixed class to the navigation container", () => {
 			const el = document.getElementById('element');
 			const inPageNav = new InPageNav(el);
@@ -69,11 +109,15 @@ describe("InPageNav", () => {
 		let dockSpy;
 		let undockSpy;
 		let inPageNav;
+		let getOptionsStub;
+		let calculateHeadings;
 
 		beforeEach(() => {
 			shouldDockStub = sinon.stub(InPageNav.prototype, 'shouldDock');
 			dockSpy = sinon.spy(InPageNav.prototype, 'dock');
 			undockSpy = sinon.spy(InPageNav.prototype, 'undock');
+			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
+			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns([]);
 
 			const el = document.getElementById('element');
 			inPageNav = new InPageNav(el);
@@ -83,6 +127,8 @@ describe("InPageNav", () => {
 			shouldDockStub.restore();
 			dockSpy.restore();
 			undockSpy.restore();
+			getOptionsStub.restore();
+			calculateHeadings.restore();
 		});
 
 		it('calls dock if the result of shouldDock is true', () => {
@@ -95,12 +141,12 @@ describe("InPageNav", () => {
 		});
 		it('calls undock if the result of shouldDock is false', () => {
 			shouldDockStub.returns(false);
-			
+
 			inPageNav.scrollWindowHandler(sinon.stub());
 			proclaim.isTrue(shouldDockStub.called);
 			proclaim.isFalse(dockSpy.called);
 			proclaim.isTrue(undockSpy.called);
-		})
+		});
 
 	});
 
