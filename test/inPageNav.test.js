@@ -18,6 +18,10 @@ describe("InPageNav", () => {
 	describe("constructor", () => {
 		let getOptionsStub;
 		let calculateHeadings;
+		const defaultOptValues = { headingsSelector: 'h2',
+											containerEl: document.body,
+											activeNavItemClass: 'o-in-page-nav-item--active',
+											navItemSelectorRoot: '.o-in-page-nav__item--'};
 
 		beforeEach(() => {
 			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
@@ -35,11 +39,72 @@ describe("InPageNav", () => {
 			proclaim.isTrue(viewportSpy.calledTwice);
 			viewportSpy.restore();
 		});
+
 		it("adds document listener for viewport scroll events", () => {
 			const documentSpy = sinon.spy(document, 'addEventListener');
 			InPageNav.init();
 			proclaim.isTrue(documentSpy.called);
 			documentSpy.restore();
+		});
+
+		it("sets defaults if no opts are passed in and none are declared", () => {
+
+			const testNav = new InPageNav(document.getElementById('element'));
+
+			Object.keys(defaultOptValues).forEach(function(key) {
+				proclaim.strictEqual(testNav[key], defaultOptValues[key])
+			});
+		});
+
+		it("uses a value passed in as opts if one exists", () => {
+			const customValues = { headingsSelector: 'h5', activeNavItemClass: 'some-class' };
+
+			const testNav = new InPageNav(document.getElementById('element'), customValues);
+
+			proclaim.strictEqual(testNav.headingsSelector, customValues.headingsSelector);
+			proclaim.strictEqual(testNav.activeNavItemClass, customValues.activeNavItemClass);
+			proclaim.strictEqual(testNav.containerEl, defaultOptValues.containerEl);
+			proclaim.strictEqual(testNav.navItemSelectorRoot, defaultOptValues.navItemSelectorRoot);
+		});
+
+		it("calls getOptions if no opts are passed in", () => {
+			const customValues = {headingsSelector: 'h5', activeNavItemClass: 'some-class' }
+
+			getOptionsStub.returns(customValues);
+
+			const testNav = new InPageNav(document.getElementById('element'));
+
+			proclaim.isTrue(getOptionsStub.called);
+			proclaim.strictEqual(testNav.headingsSelector, customValues.headingsSelector);
+			proclaim.strictEqual(testNav.activeNavItemClass, customValues.activeNavItemClass);
+			proclaim.strictEqual(testNav.containerEl, defaultOptValues.containerEl);
+			proclaim.strictEqual(testNav.navItemSelectorRoot, defaultOptValues.navItemSelectorRoot);
+		});
+
+		it('calls calculateHeadings and assigns the result to this.headings', () => {
+			let pretendHeadings = {one: "test1", two: "test2", three: "test1"};
+			calculateHeadings.returns(pretendHeadings);
+			const testNav = new InPageNav(document.getElementById('element'));
+			proclaim.deepEqual(testNav.headings, pretendHeadings)
+		});
+
+		it('wraps the innerHTML of the nav item with an inner div', () => {
+			const originalHTML = document.getElementById('element').innerHTML;
+			const expectedInnerHTML = document.createElement('div');
+			expectedInnerHTML.innerHTML = originalHTML;
+
+			const testNav = new InPageNav(document.getElementById('element'));
+
+		});
+
+		it('sets the dockPoint to the return value of InPageNav.offset', () => {
+			const offsetReturn = 1234;
+			const offsetStub = sinon.stub(InPageNav, 'offset').returns(offsetReturn);
+			const testNav = new InPageNav(document.getElementById('element'));
+
+			proclaim.isTrue(offsetStub.called);
+			proclaim.strictEqual(testNav.dockPoint, offsetReturn);
+			offsetStub.restore();
 		});
 	});
 
