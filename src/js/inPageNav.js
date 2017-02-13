@@ -42,26 +42,15 @@ class InPageNav {
 		document.addEventListener('oViewport.resize', this.resizeWindowHandler);
 	}
 
-	static getOptions(inPageNavEl){
-		let opts = {};
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-selector')) {
-			opts.headingsSelector = inPageNavEl.getAttribute('data-o-in-page-nav-headings-selector');
-		}
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-container-el')) {
-			opts.containerEl = inPageNavEl.getAttribute('data-o-in-page-nav-headings-container-el');
-		}
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-active-nav-item-class')) {
-			opts.activeNavItemClass = inPageNavEl.getAttribute('data-o-in-page-nav-active-nav-item-class');
-		}
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-nav-item-class-root')) {
-			opts.navItemClassRoot = inPageNavEl.getAttribute('data-o-in-page-nav-nav-item-class-root');
-		}
+	get scrollMargin() {
+		return Viewport.getSize().height / 8;
+	}
 
-		return opts;
+	get scrollTop() {
+		return window.pageYOffset || document.body.scrollTop;
 	}
 
 	resizeWindowHandler(){
-		/* TODO: show hide the menu according to the window width */
 
 		/* the dock point may have changed if the page has reflowed, so recalc that */
 		this.dockPoint = InPageNav.offset(this.inPageNavEl);
@@ -69,32 +58,6 @@ class InPageNav {
 		/* the headings may have changed position so recalc those */
 		this.headings = InPageNav.calculateHeadings();
 
-	}
-
-
-	// If the viewport resizes vertically, (say, because a section is open/closed) these need to be recaculated
-	static calculateHeadings(selector, rootEl) {
-		const elSelector = selector || 'h2';
-		const containerEl = rootEl || document.body;
-		const els = containerEl.querySelectorAll(elSelector);
-		let headings = [];
-		els.forEach((el) => {
-			headings.push( { id: el.id, position: InPageNav.offset(el) } );
-		});
-
-		if (headings.length === 0){
-			throw new Error('"o-in-page-nav error": No headings were found in the main document to link to.');
-		}
-
-		return headings;
-	}
-
-	get scrollMargin() {
-		return Viewport.getSize().height / 8;
-	}
-
-	get scrollTop() {
-		return window.pageYOffset || document.body.scrollTop;
 	}
 
 	scrollWindowHandler(){
@@ -151,6 +114,40 @@ class InPageNav {
 	}
 
 	buildMenu(){}; //TODO
+
+	static getOptions(inPageNavEl){
+		let opts = {};
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-selector')) {
+			opts.headingsSelector = inPageNavEl.getAttribute('data-o-in-page-nav-headings-selector');
+		}
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-container-el')) {
+			opts.containerEl = inPageNavEl.getAttribute('data-o-in-page-nav-headings-container-el');
+		}
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-active-nav-item-class')) {
+			opts.activeNavItemClass = inPageNavEl.getAttribute('data-o-in-page-nav-active-nav-item-class');
+		}
+		if (inPageNavEl.hasAttribute('data-o-in-page-nav-nav-item-class-root')) {
+			opts.navItemClassRoot = inPageNavEl.getAttribute('data-o-in-page-nav-nav-item-class-root');
+		}
+
+		return opts;
+	}
+
+	// If the viewport resizes vertically, (say, because a section is open/closed) these need to be recaculated
+	static calculateHeadings(elSelector, containerEl) {
+
+		const els = containerEl.querySelectorAll(elSelector);
+		let headings = [];
+		els.forEach((el) => {
+			headings.push( { id: el.id, position: InPageNav.offset(el) } );
+		});
+
+		if (headings.length === 0){
+			throw new Error('"o-in-page-nav error": Unable to find any headings for container and selector provided');
+		}
+
+		return headings;
+	}
 
 	// Return the vertical offset of the top of the element from the top of the document
 	static offset(el) {
