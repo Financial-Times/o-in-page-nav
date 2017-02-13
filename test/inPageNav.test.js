@@ -108,19 +108,60 @@ describe("InPageNav", () => {
 		});
 	});
 
-	describe("#offset", () => {
-		it("returns the vertical offset of the element from the top of the document", () => {
+	describe('#resizeWindowHandler', () => {
+		it('updates the dockpoint');
+		it('updates the headings');
+	});
+
+	describe("#scrollWindowHandler", () => {
+		let shouldDockStub;
+		let dockSpy;
+		let undockSpy;
+		let inPageNav;
+		let getOptionsStub;
+		let calculateHeadings;
+
+		beforeEach(() => {
+			shouldDockStub = sinon.stub(InPageNav.prototype, 'shouldDock');
+			dockSpy = sinon.spy(InPageNav.prototype, 'dock');
+			undockSpy = sinon.spy(InPageNav.prototype, 'undock');
+			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
+			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns([]);
+
 			const el = document.getElementById('element');
-
-			/* make sure this isn't already true */
-			proclaim.notEqual(InPageNav.offset(el), 50);
-
-			/* set the top to be something we know */
-			el.style.top = '50px';
-			el.style.position = 'absolute';
-
-			proclaim.strictEqual(InPageNav.offset(el), 50);
+			inPageNav = new InPageNav(el);
 		});
+
+		afterEach(() => {
+			shouldDockStub.restore();
+			dockSpy.restore();
+			undockSpy.restore();
+			getOptionsStub.restore();
+			calculateHeadings.restore();
+		});
+
+		it('calls dock if the result of shouldDock is true', () => {
+			shouldDockStub.returns(true);
+
+			inPageNav.scrollWindowHandler(sinon.stub());
+			proclaim.isTrue(shouldDockStub.called);
+			proclaim.isTrue(dockSpy.called);
+			proclaim.isFalse(undockSpy.called);
+		});
+		it('calls undock if the result of shouldDock is false', () => {
+			shouldDockStub.returns(false);
+
+			inPageNav.scrollWindowHandler(sinon.stub());
+			proclaim.isTrue(shouldDockStub.called);
+			proclaim.isFalse(dockSpy.called);
+			proclaim.isTrue(undockSpy.called);
+		});
+
+	});
+
+	describe("#getCurrentHeading", () => {
+		it('adds the active class to the current heading');
+		it('removes the active class from all the other headings');
 	});
 
 	describe("#dock", () => {
@@ -169,50 +210,28 @@ describe("InPageNav", () => {
 		});
 	});
 
-	describe("#scrollWindowHandler", () => {
-		let shouldDockStub;
-		let dockSpy;
-		let undockSpy;
-		let inPageNav;
-		let getOptionsStub;
-		let calculateHeadings;
+	describe("getOptions", () => {
+		it('extracts the data options from the element passed in to it');
+	});
 
-		beforeEach(() => {
-			shouldDockStub = sinon.stub(InPageNav.prototype, 'shouldDock');
-			dockSpy = sinon.spy(InPageNav.prototype, 'dock');
-			undockSpy = sinon.spy(InPageNav.prototype, 'undock');
-			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
-			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns([]);
+	describe("calculateHeadings", () => {
+		it('returns an array of headings objects that have an id and a page offset');
+		it('throws if there were no headings found for the selectors passed in');
+	});
 
+	describe("#offset", () => {
+		it("returns the vertical offset of the element from the top of the document", () => {
 			const el = document.getElementById('element');
-			inPageNav = new InPageNav(el);
+
+			/* make sure this isn't already true */
+			proclaim.notEqual(InPageNav.offset(el), 50);
+
+			/* set the top to be something we know */
+			el.style.top = '50px';
+			el.style.position = 'absolute';
+
+			proclaim.strictEqual(InPageNav.offset(el), 50);
 		});
-
-		afterEach(() => {
-			shouldDockStub.restore();
-			dockSpy.restore();
-			undockSpy.restore();
-			getOptionsStub.restore();
-			calculateHeadings.restore();
-		});
-
-		it('calls dock if the result of shouldDock is true', () => {
-			shouldDockStub.returns(true);
-
-			inPageNav.scrollWindowHandler(sinon.stub());
-			proclaim.isTrue(shouldDockStub.called);
-			proclaim.isTrue(dockSpy.called);
-			proclaim.isFalse(undockSpy.called);
-		});
-		it('calls undock if the result of shouldDock is false', () => {
-			shouldDockStub.returns(false);
-
-			inPageNav.scrollWindowHandler(sinon.stub());
-			proclaim.isTrue(shouldDockStub.called);
-			proclaim.isFalse(dockSpy.called);
-			proclaim.isTrue(undockSpy.called);
-		});
-
 	});
 
 });
