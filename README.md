@@ -3,8 +3,8 @@ o-in-page-nav [![Circle CI](https://circleci.com/gh/Financial-Times/o-in-page-na
 
 This component does two things:
 
-* Make a navigation element 'stick' to the screen when the window scroll position reaches the top of the 'sticky' nav
-* As the scrolling continues, adds an active class to the nav item that is on the screen
+* Make a navigation element 'stick' to the screen as the page scrolls
+* As the page moves, adds an active class to the nav item that is on the screen
 
 This component has no styling. You should style it in keeping with your product.
 
@@ -43,7 +43,7 @@ The `h2`s, or whatever you've chosen as your heading elements, should have an id
 	<a class="o-in-page-nav__item--section-4" href="#section-4">Section 4</a>
 </nav>
 <!-- whatever your body markup is -->
-<div class='content'>
+<div>
 	<h2 id='section-1'>Section 1</h2>
 	<p> ... </p>
 	<h2 id='section-2'>Section 2</h2>
