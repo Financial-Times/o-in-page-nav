@@ -1,4 +1,4 @@
-$o-component-boilerplate-is-silent: false;
+$o-in-page-nav-is-silent: false;
 @import '../../main';
 
 
@@ -13,4 +13,8 @@ body {
 
 nav a {
 	display: block;
+}
+
+.o-in-page-nav-item--active {
+	font-weight: bold;
 }

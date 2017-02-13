@@ -1,19 +1,13 @@
 @import "o-colors/main";
 @import "src/scss/variables";
 
-@if ($o-component-boilerplate-is-silent == false) {
-	 .o-component-boilerplate {
-		display: block;
-	}
-
-	// Set to silent again to avoid being output twice
-	$o-component-boilerplate-is-silent: true !global;
+@if ($o-in-page-nav-is-silent == false) {
 	.o-in-page-nav--affix {
 		position: fixed;
 		top: 0;
 	}
 
-	.o-in-page-nav-item--active {
-		font-weight: bold;
-	}
+	// Set to silent again to avoid being output twice
+	$o-in-page-nav-is-silent: true !global;
+
 }

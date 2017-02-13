@@ -1,14 +1,14 @@
 {
-		"description": "Component description",
+		"description": "Navigation for page contents",
 		"keywords": "sticky, navigation",
 		"origamiType": "module",
 		"origamiCategory": "utilities",
 		"origamiVersion": 1,
-		"support": "https://github.com/Financial-Times/o-component-boilerplate/issues",
+		"support": "https://github.com/Financial-Times/o-in-page-nav/issues",
 		"supportStatus": "active",
 		"browserFeatures": {},
 		"ci": {
-			"circle": "https://circleci.com/api/v1/project/Financial-Times/o-component-boilerplate"
+			"circle": "https://circleci.com/api/v1/project/Financial-Times/o-in-page-nav"
 		},
 		"demosDefaults": {
 			"sass": "demos/src/demo.scss",
