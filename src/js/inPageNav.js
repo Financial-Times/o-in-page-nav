@@ -124,15 +124,16 @@ class InPageNav {
 		});
 
 		if (candidate && candidate.id !== this.activeMenuItem) {
+
 			this.headings.forEach((heading) => {
-				document.querySelector(this.navItemSelectorRoot + heading.id).classList.remove(this.activeClass);
+				document.querySelector(this.navItemSelectorRoot + heading.id).classList.remove(this.activeNavItemClass);
 			});
-			document.querySelector(this.navItemSelectorRoot + candidate.id).classList.add(this.activeClass);
+			document.querySelector(this.navItemSelectorRoot + candidate.id).classList.add(this.activeNavItemClass);
 			this.activeMenuItem = candidate.id;
 
 		} else if (!candidate) {
 			this.headings.forEach((heading) => {
-				document.querySelector(this.navItemSelectorRoot + heading.id).classList.remove(this.activeClass);
+				document.querySelector(this.navItemSelectorRoot + heading.id).classList.remove(this.activeNavItemClass);
 			});
 		}
 	}
