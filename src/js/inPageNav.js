@@ -4,35 +4,18 @@ class InPageNav {
 
 	constructor (InPageNavEl, opts) {
 		this.inPageNavEl = InPageNavEl;
-		this.opts = opts || InPageNav.getOptions(InPageNavEl);
 
-		// the thing to look for within the container. Defaults to h2
-		if (this.opts.headingsSelector) {
-			this.headingsSelector = this.opts.headingsSelector;
-		} else {
-			 this.headingsSelector = 'h2';
-		}
+		// User opts is either what is passed in imperatively, or found on the InPageNavEl
+		const userOpts = opts || InPageNav.getOptions(InPageNavEl);
 
-		// the container of the menu content. Defaults to body.
-		if (this.opts.containerEl) {
-			this.containerEl = document.body;
-		} else {
-			this.containerEl = document.querySelector(this.opts.containerEl);
-		}
+		// Destructure userOpts
+		const { headingsSelector = 'h2',
+					containerEl = document.body,
+					activeNavItemClass = 'o-in-page-nav-item--active',
+					navItemSelectorRoot = '.o-in-page-nav__item--'} = userOpts;
 
-		// the container of the menu content. Defaults to body.
-		if (this.opts.activeNavItemClass) {
-			this.activeClass = this.opts.activeNavItemClass;
-		} else {
-			this.activeClass = 'o-in-page-nav-item--active';
-		}
-
-		// The root of the selector for matching a page section to a menu nav item
-		if (this.opts.navItemClassRoot) {
-			this.navItemSelectorRoot = this.opts.navItemClassRoot;
-		} else {
-			this.navItemSelectorRoot = '.o-in-page-nav__item--';
-		}
+		// Bind the destructured variables to `this`
+		Object.assign(this, { headingsSelector, containerEl, activeNavItemClass, navItemSelectorRoot });
 
 		this.headings = InPageNav.calculateHeadings(this.headingsSelector, this.containerEl);
 
