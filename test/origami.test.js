@@ -31,7 +31,7 @@ describe("InPageNav", () => {
 
 	describe("should create a new", () => {
 		beforeEach(() => {
-				fixtures.htmlCode();
+			fixtures.htmlCode();
 		});
 
 		afterEach(() => {
