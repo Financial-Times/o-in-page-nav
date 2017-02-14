@@ -10,14 +10,14 @@ class InPageNav {
 
 		// Destructure userOpts
 		const { headingsSelector = 'h2',
-					containerEl = document.body,
+					headingsContainerEl = 'body',
 					activeNavItemClass = 'o-in-page-nav-item--active',
 					navItemSelectorRoot = '.o-in-page-nav__item--'} = userOpts;
 
-		// Bind the destructured variables to `this`
-		Object.assign(this, { headingsSelector, containerEl, activeNavItemClass, navItemSelectorRoot });
+		// Bind the destructured variables to `this` exceot headingsContinerEl which we need to hydrate first
+		Object.assign(this, { headingsSelector, activeNavItemClass, headingsContainerEl, navItemSelectorRoot });
 
-		this.headings = InPageNav.calculateHeadings(this.headingsSelector, this.containerEl);
+		this.headings = InPageNav.calculateHeadings(this.headingsSelector, this.headingsContainerEl);
 
 		/* add inner wrapper div to prevent the margins collapsing */
 		let inner = document.createElement('div');
@@ -116,27 +116,29 @@ class InPageNav {
 	buildMenu(){}; //TODO
 
 	static getOptions(inPageNavEl){
-		let opts = {};
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-selector')) {
-			opts.headingsSelector = inPageNavEl.getAttribute('data-o-in-page-nav-headings-selector');
+		const opts = {};
+		const dataAttributeRoot = 'data-o-in-page-nav-';
+		if (inPageNavEl.hasAttribute( dataAttributeRoot + 'headings-selector')) {
+			opts.headingsSelector = inPageNavEl.getAttribute( dataAttributeRoot + 'headings-selector');
 		}
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-container-el')) {
-			opts.containerEl = document.querySelector(inPageNavEl.getAttribute('data-o-in-page-nav-headings-container-el'));
+		if (inPageNavEl.hasAttribute(dataAttributeRoot + 'headings-container-el')) {
+			opts.headingsContainerEl = inPageNavEl.getAttribute(dataAttributeRoot + 'headings-container-el');
 		}
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-active-nav-item-class')) {
-			opts.activeNavItemClass = inPageNavEl.getAttribute('data-o-in-page-nav-active-nav-item-class');
+		if (inPageNavEl.hasAttribute(dataAttributeRoot + 'active-nav-item-class')) {
+			opts.activeNavItemClass = inPageNavEl.getAttribute(dataAttributeRoot + 'active-nav-item-class');
 		}
-		if (inPageNavEl.hasAttribute('data-o-in-page-nav-nav-item-class-root')) {
-			opts.navItemClassRoot = inPageNavEl.getAttribute('data-o-in-page-nav-nav-item-class-root');
+		if (inPageNavEl.hasAttribute(dataAttributeRoot + 'nav-item-class-root')) {
+			opts.navItemClassRoot = inPageNavEl.getAttribute(dataAttributeRoot + 'nav-item-class-root');
 		}
 
 		return opts;
 	}
 
 	// If the viewport resizes vertically, (say, because a section is open/closed) these need to be recaculated
-	static calculateHeadings(elSelector, containerEl) {
+	static calculateHeadings(elSelector, headingsContainerEl) {
 
-		let headingElements = containerEl.querySelectorAll(elSelector);
+		let headingElements = document.querySelectorAll(headingsContainerEl + " " + elSelector);
+		console.log(headingElements);
 		if (headingElements.length === 0){
 			throw new Error('"o-in-page-nav error": Unable to find any headings for container and selector provided');
 		}

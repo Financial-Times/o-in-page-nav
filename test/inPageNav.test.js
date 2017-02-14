@@ -19,7 +19,7 @@ describe("InPageNav", () => {
 		let getOptionsStub;
 		let calculateHeadings;
 		const defaultOptValues = { headingsSelector: 'h2',
-											containerEl: document.body,
+											headingsContainerEl: 'body',
 											activeNavItemClass: 'o-in-page-nav-item--active',
 											navItemSelectorRoot: '.o-in-page-nav__item--'};
 
@@ -63,7 +63,7 @@ describe("InPageNav", () => {
 
 			proclaim.strictEqual(testNav.headingsSelector, customValues.headingsSelector);
 			proclaim.strictEqual(testNav.activeNavItemClass, customValues.activeNavItemClass);
-			proclaim.strictEqual(testNav.containerEl, defaultOptValues.containerEl);
+			proclaim.strictEqual(testNav.headingsContainerEl, defaultOptValues.headingsContainerEl);
 			proclaim.strictEqual(testNav.navItemSelectorRoot, defaultOptValues.navItemSelectorRoot);
 		});
 
@@ -77,7 +77,7 @@ describe("InPageNav", () => {
 			proclaim.isTrue(getOptionsStub.called);
 			proclaim.strictEqual(testNav.headingsSelector, customValues.headingsSelector);
 			proclaim.strictEqual(testNav.activeNavItemClass, customValues.activeNavItemClass);
-			proclaim.strictEqual(testNav.containerEl, defaultOptValues.containerEl);
+			proclaim.strictEqual(testNav.headingsContainerEl, defaultOptValues.headingsContainerEl);
 			proclaim.strictEqual(testNav.navItemSelectorRoot, defaultOptValues.navItemSelectorRoot);
 		});
 
@@ -299,7 +299,53 @@ describe("InPageNav", () => {
 	});
 
 	describe("getOptions", () => {
-		it('extracts the data options from the element passed in to it');
+
+		it('extracts headingsSelector if set', () => {
+
+			let declarativeKey = 'data-o-in-page-nav-headings-selector';
+			let imperativeKey = 'headingsSelector';
+
+			const testNavHTML = document.getElementById('element');
+			testNavHTML.setAttribute(declarativeKey, 'testString');
+
+			const options = InPageNav.getOptions(testNavHTML);
+			proclaim.strictEqual(options[imperativeKey], testNavHTML.getAttribute(declarativeKey));
+		});
+
+		it('extracts nav item class root if set', () => {
+			let declarativeKey = 'data-o-in-page-nav-nav-item-class-root';
+			let imperativeKey = 'navItemClassRoot';
+
+			const testNavHTML = document.getElementById('element');
+			testNavHTML.setAttribute(declarativeKey, 'testString');
+
+			const options = InPageNav.getOptions(testNavHTML);
+			proclaim.strictEqual(options[imperativeKey], testNavHTML.getAttribute(declarativeKey));
+
+		});
+
+		it('extracts active nav item class if set', () => {
+			let declarativeKey = 'data-o-in-page-nav-active-nav-item-class';
+			let imperativeKey = 'activeNavItemClass';
+
+			const testNavHTML = document.getElementById('element');
+			testNavHTML.setAttribute(declarativeKey, 'testString');
+
+			const options = InPageNav.getOptions(testNavHTML);
+			proclaim.strictEqual(options[imperativeKey], testNavHTML.getAttribute(declarativeKey));
+
+		});
+
+		it('extracts headings container el if set', () => {
+			let declarativeKey = 'data-o-in-page-nav-headings-container-el';
+			let imperativeKey = 'headingsContainerEl';
+
+			const testNavHTML = document.getElementById('element');
+			testNavHTML.setAttribute(declarativeKey, 'testString');
+
+			const options = InPageNav.getOptions(testNavHTML);
+			proclaim.strictEqual(options[imperativeKey], testNavHTML.getAttribute(declarativeKey));
+		});
 	});
 
 	describe("calculateHeadings", () => {

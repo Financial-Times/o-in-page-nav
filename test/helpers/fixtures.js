@@ -27,7 +27,7 @@ function htmlCode () {
 				<a class='o-in-page-nav__item--section-2'>two</a>
 				<a class='o-in-page-nav__item--section-3'>three</a>
 			</div>
-			<div>
+			<div class='customContainer'>
 				<h2 id='section-1'>Section 1</h2>
 				<h2 id='section-2'>Section 2</h2>
 				<h2 id='section-3'>Section 3</h2>
