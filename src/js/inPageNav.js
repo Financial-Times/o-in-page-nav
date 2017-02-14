@@ -121,7 +121,7 @@ class InPageNav {
 			opts.headingsSelector = inPageNavEl.getAttribute('data-o-in-page-nav-headings-selector');
 		}
 		if (inPageNavEl.hasAttribute('data-o-in-page-nav-headings-container-el')) {
-			opts.containerEl = inPageNavEl.getAttribute('data-o-in-page-nav-headings-container-el');
+			opts.containerEl = document.querySelector(inPageNavEl.getAttribute('data-o-in-page-nav-headings-container-el'));
 		}
 		if (inPageNavEl.hasAttribute('data-o-in-page-nav-active-nav-item-class')) {
 			opts.activeNavItemClass = inPageNavEl.getAttribute('data-o-in-page-nav-active-nav-item-class');
@@ -136,16 +136,14 @@ class InPageNav {
 	// If the viewport resizes vertically, (say, because a section is open/closed) these need to be recaculated
 	static calculateHeadings(elSelector, containerEl) {
 
-		const els = containerEl.querySelectorAll(elSelector);
-		let headings = [];
-		els.forEach((el) => {
-			headings.push( { id: el.id, position: InPageNav.offset(el) } );
-		});
-
-		if (headings.length === 0){
+		let headingElements = containerEl.querySelectorAll(elSelector);
+		if (headingElements.length === 0){
 			throw new Error('"o-in-page-nav error": Unable to find any headings for container and selector provided');
 		}
-
+		let headings = [];
+		[].forEach.call(headingElements, function(headingEl) {
+			headings.push( { id: headingEl.id, position: InPageNav.offset(headingEl) } );
+		});
 		return headings;
 	}
 
