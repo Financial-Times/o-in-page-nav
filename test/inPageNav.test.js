@@ -52,7 +52,7 @@ describe("InPageNav", () => {
 			const testNav = new InPageNav(document.getElementById('element'));
 
 			Object.keys(defaultOptValues).forEach(function(key) {
-				proclaim.strictEqual(testNav[key], defaultOptValues[key])
+				proclaim.strictEqual(testNav[key], defaultOptValues[key]);
 			});
 		});
 
@@ -68,7 +68,7 @@ describe("InPageNav", () => {
 		});
 
 		it("calls getOptions if no opts are passed in", () => {
-			const customValues = {headingsSelector: 'h5', activeNavItemClass: 'some-class' }
+			const customValues = {headingsSelector: 'h5', activeNavItemClass: 'some-class' };
 
 			getOptionsStub.returns(customValues);
 
@@ -85,7 +85,7 @@ describe("InPageNav", () => {
 			let pretendHeadings = {one: "test1", two: "test2", three: "test1"};
 			calculateHeadings.returns(pretendHeadings);
 			const testNav = new InPageNav(document.getElementById('element'));
-			proclaim.deepEqual(testNav.headings, pretendHeadings)
+			proclaim.deepEqual(testNav.headings, pretendHeadings);
 		});
 
 		it('wraps the innerHTML of the nav item with an inner div', () => {
@@ -95,7 +95,7 @@ describe("InPageNav", () => {
 			proclaim.notStrictEqual(navHTML.childElementCount, 1);
 			const listElCount = navHTML.childElementCount;
 
-			const testNav = new InPageNav(document.getElementById('element'));
+			new InPageNav(document.getElementById('element'));
 
 			proclaim.strictEqual(navHTML.childElementCount, 1);
 			proclaim.strictEqual(navHTML.childNodes[0].childElementCount, listElCount);
@@ -204,7 +204,6 @@ describe("InPageNav", () => {
 			const testNav = new InPageNav(testNavHTML);
 
 			let mockHeadings = [{id: 'section-1', position: 30}, {id: 'section-2', position: 88}, {id: 'section-3', position: 132}];
-			const mockScrollOffset = 0;
 			testNav.headings = mockHeadings;
 
 			testNav.updateCurrentHeading();
