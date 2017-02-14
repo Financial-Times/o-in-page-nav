@@ -153,7 +153,7 @@ describe("InPageNav", () => {
 		let inPageNav;
 		let getOptionsStub;
 		let calculateHeadingsStub;
-		let setCurrentHeadingSpy;
+		let updateCurrentHeadingSpy;
 
 		beforeEach(() => {
 			shouldDockStub = sinon.stub(InPageNav.prototype, 'shouldDock');
@@ -161,7 +161,7 @@ describe("InPageNav", () => {
 			undockSpy = sinon.spy(InPageNav.prototype, 'undock');
 			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
 			calculateHeadingsStub = sinon.stub(InPageNav, 'calculateHeadings').returns([]);
-			setCurrentHeadingSpy = sinon.spy(InPageNav.prototype, 'setCurrentHeading');
+			updateCurrentHeadingSpy = sinon.spy(InPageNav.prototype, 'updateCurrentHeading');
 
 			const el = document.getElementById('element');
 			inPageNav = new InPageNav(el);
@@ -173,7 +173,7 @@ describe("InPageNav", () => {
 			undockSpy.restore();
 			getOptionsStub.restore();
 			calculateHeadingsStub.restore();
-			setCurrentHeadingSpy.restore();
+			updateCurrentHeadingSpy.restore();
 		});
 
 		it('calls dock if the result of shouldDock is true', () => {
@@ -192,18 +192,64 @@ describe("InPageNav", () => {
 			proclaim.isFalse(dockSpy.called);
 			proclaim.isTrue(undockSpy.called);
 		});
-		it('calls setCurrentHeading', () => {
+		it('calls updateCurrentHeading', () => {
 			inPageNav.scrollWindowHandler(sinon.stub());
+			proclaim.isTrue(updateCurrentHeadingSpy.called);
+		});
+	});
 
-			proclaim.isTrue(setCurrentHeadingSpy.called);
+	describe("#updateCurrentHeading", () => {
+		it('adds the active class to the current heading', () => {
+			const testNavHTML = document.getElementById('element');
+			const testNav = new InPageNav(testNavHTML);
+
+			let mockHeadings = [{id: 'section-1', position: 30}, {id: 'section-2', position: 88}, {id: 'section-3', position: 132}];
+			const mockScrollOffset = 0;
+			testNav.headings = mockHeadings;
+
+			testNav.updateCurrentHeading();
+
+			proclaim.strictEqual(testNavHTML.querySelectorAll('.'+testNav.activeNavItemClass).length, 1);
+
+			let selectedEl = document.querySelector(testNav.navItemSelectorRoot + 'section-1');
+
+			proclaim.isTrue(selectedEl.classList.contains(testNav.activeNavItemClass));
+
+			// Move the headings up a bit
+			mockHeadings = [{id: 'section-1', position: 0}, {id: 'section-2', position: 1}, {id: 'section-3', position: 30}];
+			testNav.headings = mockHeadings;
+
+			testNav.updateCurrentHeading();
+			proclaim.strictEqual(testNavHTML.querySelectorAll('.'+testNav.activeNavItemClass).length, 1);
+			proclaim.isFalse(selectedEl.classList.contains(testNav.activeNavItemClass));
+
+			selectedEl = document.querySelector(testNav.navItemSelectorRoot + 'section-3');
+
+			proclaim.isTrue(selectedEl.classList.contains(testNav.activeNavItemClass));
 
 		});
 
-	});
+		it('removes the active class from all the other headings', () => {
+			const testNavHTML = document.getElementById('element');
+			const testNav = new InPageNav(testNavHTML);
 
-	describe("#getCurrentHeading", () => {
-		it('adds the active class to the current heading');
-		it('removes the active class from all the other headings');
+			let mockHeadings = [{id: 'section-1', position: 30}, {id: 'section-2', position: 88}, {id: 'section-3', position: 132}];
+
+			testNav.headings = mockHeadings;
+
+			// Add the active class to all of the headings
+			mockHeadings.forEach((heading) => {
+				document.querySelector(testNav.navItemSelectorRoot + heading.id).classList.add(testNav.activeNavItemClass);
+			});
+
+			// check all of the headings got classes
+			proclaim.strictEqual(testNavHTML.querySelectorAll('.'+testNav.activeNavItemClass).length, mockHeadings.length);
+
+			testNav.updateCurrentHeading();
+
+			proclaim.strictEqual(testNavHTML.querySelectorAll('.'+testNav.activeNavItemClass).length, 1);
+
+		});
 	});
 
 	describe("#dock", () => {
