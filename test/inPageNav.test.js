@@ -89,12 +89,16 @@ describe("InPageNav", () => {
 		});
 
 		it('wraps the innerHTML of the nav item with an inner div', () => {
-			const originalHTML = document.getElementById('element').innerHTML;
-			const expectedInnerHTML = document.createElement('div');
-			expectedInnerHTML.innerHTML = originalHTML;
+			const navHTML = document.getElementById('element');
+
+
+			proclaim.notStrictEqual(navHTML.childElementCount, 1);
+			const listElCount = navHTML.childElementCount;
 
 			const testNav = new InPageNav(document.getElementById('element'));
 
+			proclaim.strictEqual(navHTML.childElementCount, 1);
+			proclaim.strictEqual(navHTML.childNodes[0].childElementCount, listElCount);
 		});
 
 		it('sets the dockPoint to the return value of InPageNav.offset', () => {
