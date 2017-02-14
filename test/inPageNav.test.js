@@ -109,8 +109,37 @@ describe("InPageNav", () => {
 	});
 
 	describe('#resizeWindowHandler', () => {
-		it('updates the dockpoint');
-		it('updates the headings');
+		let headingsStub;
+		let offsetStub;
+
+		beforeEach(() => {
+			headingsStub = sinon.stub(InPageNav, 'calculateHeadings');
+			offsetStub = sinon.stub(InPageNav, 'offset');
+
+		});
+		afterEach(() => {
+			headingsStub.restore();
+			offsetStub.restore();
+		});
+
+		it('updates the dockpoint and headings', () => {
+
+			const headingsReturnValue = ['heading1', 'heading2'];
+			headingsStub.returns(headingsReturnValue);
+
+			const offsetReturn = 'offset';
+			offsetStub.returns(offsetReturn);
+
+			const testNav = new InPageNav(document.getElementById('element'));
+
+			testNav.resizeWindowHandler();
+
+			proclaim.isTrue(headingsStub.called);
+			proclaim.isTrue(offsetStub.called);
+
+			proclaim.deepEqual(testNav.headings, headingsReturnValue);
+			proclaim.strictEqual(testNav.dockPoint, offsetReturn);
+		});
 	});
 
 	describe("#scrollWindowHandler", () => {
