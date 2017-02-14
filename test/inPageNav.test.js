@@ -152,14 +152,16 @@ describe("InPageNav", () => {
 		let undockSpy;
 		let inPageNav;
 		let getOptionsStub;
-		let calculateHeadings;
+		let calculateHeadingsStub;
+		let setCurrentHeadingSpy;
 
 		beforeEach(() => {
 			shouldDockStub = sinon.stub(InPageNav.prototype, 'shouldDock');
 			dockSpy = sinon.spy(InPageNav.prototype, 'dock');
 			undockSpy = sinon.spy(InPageNav.prototype, 'undock');
 			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
-			calculateHeadings = sinon.stub(InPageNav, 'calculateHeadings').returns([]);
+			calculateHeadingsStub = sinon.stub(InPageNav, 'calculateHeadings').returns([]);
+			setCurrentHeadingSpy = sinon.spy(InPageNav.prototype, 'setCurrentHeading');
 
 			const el = document.getElementById('element');
 			inPageNav = new InPageNav(el);
@@ -170,7 +172,8 @@ describe("InPageNav", () => {
 			dockSpy.restore();
 			undockSpy.restore();
 			getOptionsStub.restore();
-			calculateHeadings.restore();
+			calculateHeadingsStub.restore();
+			setCurrentHeadingSpy.restore();
 		});
 
 		it('calls dock if the result of shouldDock is true', () => {
@@ -188,6 +191,12 @@ describe("InPageNav", () => {
 			proclaim.isTrue(shouldDockStub.called);
 			proclaim.isFalse(dockSpy.called);
 			proclaim.isTrue(undockSpy.called);
+		});
+		it('calls setCurrentHeading', () => {
+			inPageNav.scrollWindowHandler(sinon.stub());
+
+			proclaim.isTrue(setCurrentHeadingSpy.called);
+
 		});
 
 	});

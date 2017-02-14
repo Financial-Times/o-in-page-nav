@@ -66,11 +66,11 @@ class InPageNav {
 		} else {
 			this.undock();
 		}
-		this.getCurrentHeading();
+		this.updateCurrentHeading();
 		return false;
 	}
 
-	getCurrentHeading(){
+	updateCurrentHeading(){
 		const scrollOffset = this.scrollTop + this.scrollMargin;
 		let candidate;
 
