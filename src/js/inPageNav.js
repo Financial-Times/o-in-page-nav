@@ -138,7 +138,7 @@ class InPageNav {
 	static calculateHeadings(elSelector, headingsContainerEl) {
 
 		let headingElements = document.querySelectorAll(headingsContainerEl + " " + elSelector);
-		console.log(headingElements);
+
 		if (headingElements.length === 0){
 			throw new Error('"o-in-page-nav error": Unable to find any headings for container and selector provided');
 		}

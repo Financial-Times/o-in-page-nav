@@ -348,8 +348,31 @@ describe("InPageNav", () => {
 	});
 
 	describe("calculateHeadings", () => {
-		it('returns an array of headings objects that have an id and a page offset');
-		it('throws if there were no headings found for the selectors passed in');
+		it('returns an array of headings objects that have an id and a page offset', () => {
+			let headings = InPageNav.calculateHeadings('h2', 'body');
+
+			headings.forEach((heading) => {
+				proclaim.ok(document.getElementById(heading.id));
+				proclaim.isNumber(heading.position);
+			});
+
+			proclaim.strictEqual(headings.length, 3);
+		});
+
+		it('calculates sets the position to the return value for offset', () => {
+			const offsetStub = sinon.stub(InPageNav, 'offset').returns('testValue3');
+			offsetStub.onFirstCall().returns('testValue1');
+			offsetStub.onSecondCall().returns('testValue2');
+
+			InPageNav.calculateHeadings('h2', 'body');
+
+			proclaim.isTrue(offsetStub.calledThrice); // m'lady
+			offsetStub.restore();
+		});
+
+		it('throws if there were no headings found for the selectors passed in', () => {
+			proclaim.throws(() => {InPageNav.calculateHeadings('nope', 'nope');});
+		});
 	});
 
 	describe("#offset", () => {
