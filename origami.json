@@ -20,7 +20,7 @@
 				"name": "demo",
 				"js": "demos/src/demo.js",
 				"template": "demos/src/demo.mustache",
-				"description": "Description of the demo"
+				"description": "Sticky nav with menu content"
 			},
 			{
 				"name": "pa11y",
