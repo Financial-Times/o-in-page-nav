@@ -17,7 +17,7 @@ This component has no styling. You should style it in keeping with your product.
 
 ## Usage
 
-This component can be used imperatively, passed in as options to the constructor, or declaratively using data attributes on the `o-in-page-nav` node eg `data-o-in-page-nav-headings-selector="h3"`.
+This component can be configured imperatively, by passing options in on the constructor, or declaratively using data attributes on the `o-in-page-nav` node eg `data-o-in-page-nav-headings-selector="h3"`.
 
 The available configuration options are:
 
@@ -26,14 +26,13 @@ The available configuration options are:
 * **active-nav-item-class**: The class to be added to the 'active' item in the navigation. Defaults to `o-in-page-nav-item--active`
 * **nav-item-selector-root**: The root of the selector used to highlight the active item. Defaults to `.o-in-page-nav__item--`.
 
-
 ### Markup
 
 We advise your navigation markup uses a `<nav>` with some links in, rather than using an ordered list. The reasons for this are discussed at length [in this CSS tricks article](https://css-tricks.com/navigation-in-lists-to-be-or-not-to-be/), tl;dr Screen readers.
 
 Your nav links should have a class of `o-in-page-nav__item--{section id}`. This is used to highlight the active element as the page scrolls. If you want to define your own selector (not use `o-in-page-nav*`), you can set a custom selector root in the options on the `o-in-page-nav` element.
 
-The `h2`s, or whatever you've chosen as your heading elements, should have an id so they can be jump linked to.
+The `h2`s, or whatever you've chosen as your heading elements, should have an id so they can be jump-linked to.
 
 ```html
 <nav role="navigation" data-o-component='o-in-page-nav'>
