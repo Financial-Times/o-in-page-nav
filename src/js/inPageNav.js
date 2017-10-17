@@ -27,8 +27,6 @@ class InPageNav {
 		this.inPageNavEl.innerHTML = '';
 		this.inPageNavEl.appendChild(inner);
 
-		this.activeMenuItem;
-
 		this.dockPoint = InPageNav.offset(this.inPageNavEl); // don't recalc this unless the viewport changes.
 
 		// Add viewport listeners
@@ -42,11 +40,11 @@ class InPageNav {
 		document.addEventListener('oViewport.resize', this.resizeWindowHandler);
 	}
 
-	get scrollMargin() {
+	get scrollMargin() { // eslint-disable-line class-methods-use-this
 		return Viewport.getSize().height / 8;
 	}
 
-	get scrollTop() {
+	get scrollTop() { // eslint-disable-line class-methods-use-this
 		return window.pageYOffset || document.body.scrollTop;
 	}
 
@@ -113,7 +111,9 @@ class InPageNav {
 		this.inPageNavEl.classList.remove('o-in-page-nav--affix');
 	}
 
-	buildMenu(){}; //TODO
+	buildMenu() { // eslint-disable-line class-methods-use-this
+		//TODO
+	}
 
 	static getOptions(inPageNavEl){
 		const opts = {};
