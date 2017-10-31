@@ -9,10 +9,12 @@ class InPageNav {
 		const userOpts = opts || InPageNav.getOptions(InPageNavEl);
 
 		// Destructure userOpts
-		const { headingsSelector = 'h2',
-					headingsContainerEl = 'body',
-					activeNavItemClass = 'o-in-page-nav-item--active',
-					navItemSelectorRoot = '.o-in-page-nav__item--'} = userOpts;
+		const {
+			headingsSelector = 'h2',
+			headingsContainerEl = 'body',
+			activeNavItemClass = 'o-in-page-nav-item--active',
+			navItemSelectorRoot = '.o-in-page-nav__item--'
+		} = userOpts;
 
 		// Bind the destructured variables to `this` exceot headingsContinerEl which we need to hydrate first
 		Object.assign(this, { headingsSelector, activeNavItemClass, headingsContainerEl, navItemSelectorRoot });
