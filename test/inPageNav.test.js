@@ -18,10 +18,12 @@ describe("InPageNav", () => {
 	describe("constructor", () => {
 		let getOptionsStub;
 		let calculateHeadings;
-		const defaultOptValues = { headingsSelector: 'h2',
-											headingsContainerEl: 'body',
-											activeNavItemClass: 'o-in-page-nav-item--active',
-											navItemSelectorRoot: '.o-in-page-nav__item--'};
+		const defaultOptValues = {
+			headingsSelector: 'h2',
+			headingsContainerEl: 'body',
+			activeNavItemClass: 'o-in-page-nav-item--active',
+			navItemSelectorRoot: '.o-in-page-nav__item--'
+		};
 
 		beforeEach(() => {
 			getOptionsStub = sinon.stub(InPageNav, 'getOptions').returns({});
