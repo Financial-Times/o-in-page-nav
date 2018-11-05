@@ -1,4 +1,4 @@
-o-in-page-nav [![Circle CI](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master.svg?style=svg)](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master)
+o-in-page-nav [![Circle CI](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master.svg?style=svg)](https://circleci.com/gh/Financial-Times/o-in-page-nav/tree/master) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](#licence)
 =================
 
 This component does two things:
